@@ -1,11 +1,13 @@
 {
   "name": "survey-with-surveyjs",
   "version": "1.0.0",
-  "description": "",
+  "description": "medical-survey",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx serve",
+    "dev": "nodemon index.js"
+ },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -17,5 +19,6 @@
     "serve": "^14.2.1",
     "survey-core": "^1.9.114",
     "survey-knockout": "^1.9.114"
-  }
+  },
+  "devDependencies": {}
 }
