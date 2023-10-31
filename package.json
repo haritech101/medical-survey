@@ -4,10 +4,9 @@
   "description": "medical-survey",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx serve",
     "dev": "nodemon index.js"
- },
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -20,5 +19,8 @@
     "survey-core": "^1.9.114",
     "survey-knockout": "^1.9.114"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@playwright/test": "^1.39.0",
+    "@types/node": "^20.8.9"
+  }
 }
