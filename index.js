@@ -5,9 +5,32 @@ let jsonForSurvey = {
             name: "lr",
             title: "LR",
             type: "text",
+            "inputType": "number",
+            "step": 1,
             "isRequired": true,
             "validators": [
-                { "type": "numeric", "text": "Value must be a number" }
+                { 
+                    "type": "numeric", 
+                    "type": "regex",
+                    "text": "Value must be a number",
+                    "regex": "[0-9]*" 
+                }
+            ]
+        },
+        {
+            name: "tr",
+            title: "TR",
+            type: "text",
+            "inputType": "number",
+            "step": 0.001,
+            "isRequired": true,
+            "validators": [
+                { 
+                    "type": "numeric", 
+                    "type": "regex",
+                    "text": "Value must be a number",
+                    "regex": "[0-9]*" 
+                }
             ]
         },
         {
