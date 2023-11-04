@@ -1,4 +1,4 @@
-FROM node:21.1
+FROM node:18
 
 WORKDIR /opt/medical-survey
 COPY package* ./
