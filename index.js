@@ -1,8 +1,8 @@
 $(async () => {
     try {
         let requestInfo = new Request(
-            //"https://medical-survey-api.tech101.in/surveys/654309ec3b447b85bbe3af97/surveyjs",
-            "http://localhost:8080/surveys/65457f5e4761b17bcdb35a96/surveyjs",
+            "https://medical-survey-api.tech101.in/surveys/654309ec3b447b85bbe3af97/surveyjs",
+            //"http://localhost:8080/surveys/65457f5e4761b17bcdb35a96/surveyjs",
             {
                 method: "get",
             }
