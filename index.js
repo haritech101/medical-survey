@@ -35,7 +35,7 @@ $(async () => {
         surveyViewModel.applyTheme(SurveyTheme.SharpLight);
         surveyViewModel.onComplete.add(async (survey) => {
             let submitData = {
-                surveyId: "65457f5e4761b17bcdb35a96",
+                surveyId: "654309ec3b447b85bbe3af97",
                 ...survey.data,
             };
 
