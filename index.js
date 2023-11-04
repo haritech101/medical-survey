@@ -40,7 +40,8 @@ $(async () => {
             };
 
             let submitRequest = new Request(
-                "http://localhost:8080/survey-responses",
+                //"http://localhost:8080/survey-responses",
+                "https://medical-survey-api.tech101.in/survey-responses",
                 {
                     method: "post",
                     headers: {
