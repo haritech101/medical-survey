@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  survey:
+    image: haritech101/medical-survey
+    ports:
+      - "37080:3000"

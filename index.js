@@ -1,104 +1,64 @@
-let jsonForSurvey = {
-    elements: [
-        
-        {
-            name: "lr",
-            title: "LR",
-            type: "text",
-            "inputType": "number",
-            "step": 1,
-            "isRequired": true,
-            "validators": [
-                { 
-                    "type": "numeric", 
-                    "type": "regex",
-                    "text": "Value must be a number",
-                    "regex": "[0-9]*" 
-                }
-            ]
-        },
-        {
-            name: "tr",
-            title: "TR",
-            type: "text",
-            "inputType": "number",
-            "step": 0.001,
-            "isRequired": true,
-            "validators": [
-                { 
-                    "type": "numeric", 
-                    "type": "regex",
-                    "text": "Value must be a number",
-                    "regex": "[0-9]*" 
-                }
-            ]
-        },
-        {
-            name: "wdr",
-            title: "WDR",
-            type: "radiogroup",
-            "isRequired": true,
-            "requiredErrorText": "Value cannot be empty",
-            choices: [
-                "Yes",
-                "No"
-            ]
-        },        
-        { 
-            type: "radiogroup", 
-            name: "price to competitors",
-            title: "Compared to our competitors, do you feel the Product is",
-            "isRequired": true,
-            "requiredErrorText": "Value cannot be empty",
-            choices: [
-                "Less expensive", 
-                "Priced about the same", 
-                "More expensive", 
-                "Not sure"
-            ]
-        },
-        { 
-            type: "radiogroup",                 
-            name: "price", 
-            title: "Do you feel our current price is merited by our product?",
-            "isRequired": true,
-            "requiredErrorText": "Value cannot be empty",
-                
-            choices: [
-                "correct|Yes, the price is about right",
-                "low|No, the price is too low for your product",
-                "high|No, the price is too high for your product"
-            ]
-        },
-            
-        { 
-            type: "multipletext", 
-            name: "pricelimit", 
-            title: "What is the... ",
-                
-            items: [
-                { 
-                    name: "mostamount", 
-                    title: "Most amount you would every pay for a product like ours" 
-                },
-                    
-                { 
-                    name: "leastamount", 
-                    title: "The least amount you would feel comfortable paying" 
-                }
-            ]
-        },
+$(async () => {
+    try {
+        let requestInfo = new Request(
+            "https://medical-survey-api.tech101.in/surveys/654309ec3b447b85bbe3af97/surveyjs",
+            //"http://localhost:8080/surveys/65457f5e4761b17bcdb35a96/surveyjs",
+            {
+                method: "get",
+            }
+        );
 
-                    
-            
-        
-    ],
-};
+        let httpResponse = await fetch(requestInfo);
 
-let surveyViewModel = new Survey.Model(jsonForSurvey);
-surveyViewModel.applyTheme(SurveyTheme.SharpLight);
-$(() => {
-    ko.applyBindings({
-        theViewModel: surveyViewModel,
-    });
+        let { status, statusText } = httpResponse;
+        let message;
+
+        let payload = await httpResponse.json();
+
+        if (payload) {
+            ({ message } = payload);
+        }
+
+        if (status != 200) {
+            console.log(
+                `Failed to fetch survey data with error ${status} ${statusText}`
+            );
+
+            if (message) {
+                console.log(message);
+            }
+        }
+
+        let { data } = payload;
+
+        let surveyViewModel = new Survey.Model(data);
+        surveyViewModel.applyTheme(SurveyTheme.SharpLight);
+        surveyViewModel.onComplete.add(async (survey) => {
+            let submitData = {
+                surveyId: "654309ec3b447b85bbe3af97",
+                ...survey.data,
+            };
+
+            let submitRequest = new Request(
+                //"http://localhost:8080/survey-responses",
+                "https://medical-survey-api.tech101.in/survey-responses",
+                {
+                    method: "post",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(submitData),
+                }
+            );
+
+            await fetch(submitRequest);
+        });
+
+        ko.applyBindings({
+            theViewModel: surveyViewModel,
+        });
+    } catch (e) {
+        console.log("Fault occured on the page");
+        console.log(e);
+    }
 });
